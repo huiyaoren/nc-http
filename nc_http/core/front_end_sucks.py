@@ -3,9 +3,9 @@ from types import SimpleNamespace
 
 
 class HandleType:
-    SWITCH = 1
-    UPDATE = 2
-    STAT = 3
+    SWITCH = 1  # 值交换
+    UPDATE = 2  # 字段新增
+    STAT = 3  # 统计回归
 
 
 class FrontEndSucksUtil:
@@ -19,8 +19,6 @@ class FrontEndSucksUtil:
         结果处理 小数保留
         :param data: list<dict> / dict
         :param digits: number
-        :param keys: list<str>
-        :param key: str
         :return:
         """
         def _round(field):
@@ -37,7 +35,7 @@ class FrontEndSucksUtil:
     @classmethod
     def percent(cls, data, **kwargs):
         """
-        结果处理 浮点型 转百分比
+        结果处理 转百分比
         :param data:
         :param kwargs:
         :return:
