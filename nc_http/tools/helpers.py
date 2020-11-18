@@ -93,6 +93,29 @@ def build_url(base, additional_params=None):
     )
 
 
+def parse_mobile(mobile_str):
+    """
+    解析手机号码
+    :param mobile_str:
+    :return:
+    """
+    COUNTRY_ZONE = ('86',)
+
+    match = re.findall(r'^(\+({0}))?(\d+)$'.format('|'.join(COUNTRY_ZONE)), mobile_str)
+    if match:
+        zone, mobile = match[0][-2:]
+        if '+' in mobile_str and not zone:
+            return None
+
+        if not zone:
+            zone = '86'
+
+        if zone == '86' and re.match(r'^1\d{10}$', mobile) is not None:
+            return zone, mobile
+
+    return None
+
+
 if __name__ == '__main__':
     s = valid_email('wslstest@sample.com')
     print(s)
@@ -107,4 +130,7 @@ if __name__ == '__main__':
     print(s)
 
     s = build_url('http://www.baidu.com', {'a': 1, 'b': 2})
+    print(s)
+
+    s = parse_mobile('+8615888888888')
     print(s)
