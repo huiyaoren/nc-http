@@ -1,10 +1,9 @@
 import unittest
 
-from nc_http.utils.front_end_sucks import FrontEndSucksUtil
+from nc_http.core.fe_sucks import FESucks
 
 
 class FrontEndSucksTestCase(unittest.TestCase):
-
     test_data = [
         {
             "parent_smid": 0, "smid": 1, "smx": None, "smy": 23.6732798415205, "smlibtileid": 1, "smuserid": 0,
@@ -43,41 +42,41 @@ class FrontEndSucksTestCase(unittest.TestCase):
 
     def test_round(self):
         test_data = self.test_data
-        _result = FrontEndSucksUtil.round(test_data, 1)
+        _result = FESucks.round(test_data, 1)
         self.assertEqual(len(_result), len(test_data))
-        _result = FrontEndSucksUtil.round(test_data, 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
+        _result = FESucks.round(test_data, 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
         self.assertEqual(_result[0]['smy'], 23.7)
-        _result = FrontEndSucksUtil.round(test_data[0], 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
+        _result = FESucks.round(test_data[0], 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
         self.assertEqual(_result['smy'], 23.7)
 
     def test_percent(self):
         test_data = self.test_data
-        _result = FrontEndSucksUtil.round(test_data[0], 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
-        _result = FrontEndSucksUtil.percent(_result, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
+        _result = FESucks.round(test_data[0], 1, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
+        _result = FESucks.percent(_result, keys=['smx', 'smy', 'zd', 'sbjl', 'sbtz', 'sbtzh'])
         self.assertEqual(_result['smy'], '2370.0%')
 
     def test_mapping(self):
         test_data = self.test_data
         test_field_map = {0: '零', 1: '一', 2: '二', 3: '三', 4: '四'}
-        _result = FrontEndSucksUtil.mapping(test_data, test_field_map, test_field_map, key='smid')
-        _result = FrontEndSucksUtil.mapping(test_data, test_field_map, key_map={'smid': 'smid_str'})
+        _result = FESucks.mapping(test_data, test_field_map, test_field_map, key='smid')
+        _result = FESucks.mapping(test_data, test_field_map, key_map={'smid': 'smid_str'})
         self.assertEqual(_result[0]['smid_str'], '一')
 
     def test_sum(self):
         test_data = self.test_data
-        _total = FrontEndSucksUtil.sum(test_data, key='zd')
-        _total = FrontEndSucksUtil.sum(test_data, key='smx')
+        _total = FESucks.sum(test_data, key='zd')
+        _total = FESucks.sum(test_data, key='smx')
         self.assertEqual(_total, 472.143528880605)
 
     def test_ratio(self):
         test_data = self.test_data
-        _total = FrontEndSucksUtil.sum(test_data, key='smx')
-        _result = FrontEndSucksUtil.ratio(test_data, _total, key_map={'zd': 'zd_per'})
+        _total = FESucks.sum(test_data, key='smx')
+        _result = FESucks.ratio(test_data, _total, key_map={'zd': 'zd_per'})
         self.assertEqual(_result[0]['zd_per'], 151 / _total)
 
     def test_list_to_tree(self):
         test_data = self.test_data
-        _result = FrontEndSucksUtil.list_to_tree(test_data, id_key='smid', parent_id_key='parent_smid')
+        _result = FESucks.list_to_tree(test_data, id_key='smid', parent_id_key='parent_smid')
         self.assertEqual(_result[0]['children'][0]['children'][0]['children'][0]['children'][0]['children'], [])
 
 
