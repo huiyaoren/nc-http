@@ -8,7 +8,7 @@ class HandleType:
     STAT = 3  # 统计回归
 
 
-class FrontEndSucksUtil:
+class FESucks:
     """
     Don't blame me, we have a terrible Front-End coder.
     """
@@ -189,7 +189,7 @@ class FrontEndSucksUtil:
         data = []
         for row in rows:
             if row[parent_id_key] == i:
-                row['children'] = FrontEndSucksUtil.list_to_tree(rows, id_key, parent_id_key, row[id_key])
+                row['children'] = FESucks.list_to_tree(rows, id_key, parent_id_key, row[id_key])
                 data.append(row)
         return data
 
