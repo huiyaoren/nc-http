@@ -4,6 +4,10 @@ import string
 
 from six.moves.urllib import parse as urlparse
 
+"""
+工具函数集
+"""
+
 
 def valid_email(email):
     """
