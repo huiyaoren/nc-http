@@ -73,3 +73,18 @@ def send_excel(file_handler, file_name, suffix='xlsx'):
         attachment_filename='{}.{}'.format(file_name, suffix),
         as_attachment=True
     )
+
+
+def send_png(img_handler, name='image'):
+    """
+    发送图片文件（可用于验证码）
+    :param img_handler:
+    :param name:
+    :return:
+    """
+    return send_file(
+        img_handler,
+        mimetype='image/png',
+        attachment_filename='{}.png'.format(name),
+        as_attachment=True
+    )
