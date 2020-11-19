@@ -26,6 +26,11 @@ def valid_email(email):
     return False
 
 
+LETTERS = 0b001
+DIGITS = 0b010
+PUNCTUATION = 0b100
+
+
 def random_ascii_string(length, mask=None):
     """
     生成随机 ascii 字符串
@@ -33,9 +38,6 @@ def random_ascii_string(length, mask=None):
     :param mask:
     :return:
     """
-    LETTERS = 0b001
-    DIGITS = 0b010
-    PUNCTUATION = 0b100
 
     if mask is None:
         mask = LETTERS | DIGITS
@@ -93,14 +95,15 @@ def build_url(base, additional_params=None):
     )
 
 
+COUNTRY_ZONE = ('86',)
+
+
 def parse_mobile(mobile_str):
     """
     解析手机号码
     :param mobile_str:
     :return:
     """
-    COUNTRY_ZONE = ('86',)
-
     match = re.findall(r'^(\+({0}))?(\d+)$'.format('|'.join(COUNTRY_ZONE)), mobile_str)
     if match:
         zone, mobile = match[0][-2:]
@@ -114,6 +117,41 @@ def parse_mobile(mobile_str):
             return zone, mobile
 
     return None
+
+
+def list_to_tree(rows, id_key='id', parent_id_key='parent_id', i=0):
+    """
+    list转tree的函数
+    :param rows:
+    :param id_key:
+    :param parent_id_key:
+    :param i:
+    :return:
+    """
+    data = []
+    for row in rows:
+        if row[parent_id_key] == i:
+            row['children'] = list_to_tree(rows, id_key=id_key, parent_id_key=parent_id_key, i=row[id_key])
+            data.append(row)
+    return data
+
+
+def cut_tree(trees, nodes, id_key='id', parent_id_key='parent_id'):
+    """
+    根据叶结点整理出包含所有叶节点的最小树结构
+    :param trees:
+    :param nodes: 叶结点
+    :param id_key:
+    :param parent_id_key:
+    :return:
+    """
+    data = []
+    for row in trees:
+        children = cut_tree(row['children'], nodes, id_key=id_key, parent_id_key=parent_id_key)
+        if children or row['id'] in nodes:
+            row['children'] = children
+            data.append(row)
+    return data
 
 
 if __name__ == '__main__':
