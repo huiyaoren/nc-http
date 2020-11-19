@@ -47,18 +47,16 @@ class DataFormatValidator:
                     continue
 
                 combination_rule = rule.split(":", 1)
-                if len(combination_rule) == 2:
-                    func = getattr(self, combination_rule[0].strip())
-                    args = combination_rule[1].split(',')
-                    if not func(field_value, *args):
-                        self.set_error(key, rule)
-                        item_valid = is_valid = False
-                else:
-                    func = getattr(self, rule.strip())
-                    if not func(field_value):
-                        self.set_error(key, rule)
-                        item_valid = is_valid = False
 
+                if len(combination_rule) == 2:
+                    field_values = (field_value, *combination_rule[1].split(','))
+                else:
+                    field_values = (field_value,)
+
+                func = getattr(self, combination_rule[0].strip())
+                if not func(*field_values):
+                    self.set_error(key, rule)
+                    item_valid = is_valid = False
             # 如果当前项所有规则都验证通过，加入有效数据
             if item_valid:
                 valid_data[key] = field_value
