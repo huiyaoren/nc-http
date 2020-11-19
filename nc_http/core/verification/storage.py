@@ -4,6 +4,9 @@ from nc_http.core.verification.image import SimpleImageCaptcha
 
 
 class BaseCaptchaStorage(ABC):
+    """
+    验证码信息池
+    """
 
     @classmethod
     def create(cls, *args, **kwargs):

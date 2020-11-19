@@ -6,6 +6,9 @@ from captcha.image import ImageCaptcha
 
 
 class SimpleImageCaptcha:
+    """
+    图片验证码
+    """
 
     def __init__(self, width=150, height=50, captcha_length=4, characters=string.digits, *args, **kwargs):
         self.__width = width
