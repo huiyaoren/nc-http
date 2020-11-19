@@ -1,6 +1,8 @@
 from decimal import Decimal
 from types import SimpleNamespace
 
+from nc_http.tools.helpers import list_to_tree
+
 
 class HandleType:
     SWITCH = 1  # 值交换
@@ -169,11 +171,12 @@ class FESucks:
 
         return rs
 
-    @classmethod
-    def _parse_keys(cls, key, keys):
+    @staticmethod
+    def _parse_keys(key, keys):
         keys = keys or []
         if key:
             keys.append(key)
+
         return keys
 
     @staticmethod
@@ -186,12 +189,7 @@ class FESucks:
         :param i:
         :return:
         """
-        data = []
-        for row in rows:
-            if row[parent_id_key] == i:
-                row['children'] = FESucks.list_to_tree(rows, id_key, parent_id_key, row[id_key])
-                data.append(row)
-        return data
+        return list_to_tree(rows, id_key, parent_id_key, i)
 
 
 '''

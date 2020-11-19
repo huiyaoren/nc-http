@@ -1,2 +1,8 @@
 pycman
 coverage
+flask
+werkzeug
+xlsxwriter
+xlrd
+captcha
+six
