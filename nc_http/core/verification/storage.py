@@ -1,9 +1,9 @@
-from abc import abstractmethod, ABC
+from abc import abstractmethod
 
 from nc_http.core.verification.image import SimpleImageCaptcha
 
 
-class BaseCaptchaStorage(ABC):
+class BaseCaptchaStorage:
     """
     验证码信息池
     """
