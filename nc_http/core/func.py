@@ -36,7 +36,7 @@ def get_request_json():
                 json_data = zlib.decompress(request.get_data())
                 data = json.loads(json_data)
             else:
-                data = request.get_json(force=True)
+                data = request.get_json(force=True, silent=True)
 
         g.request_data = strip_value(data)
 
