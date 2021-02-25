@@ -1,3 +1,5 @@
+import copy
+
 from werkzeug.wrappers import Response
 from flask import json
 
@@ -16,8 +18,9 @@ class ResponseMeta(Exception):
         self.extra = kwargs
 
     def update(self, **kwargs):
-        self.extra.update(kwargs)
-        return self
+        obj = copy.copy(self)
+        obj.extra.update(kwargs)
+        return obj
 
     def present(self):
         data = {}
