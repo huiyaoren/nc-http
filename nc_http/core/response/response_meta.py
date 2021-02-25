@@ -17,6 +17,7 @@ class ResponseMeta(Exception):
 
     def update(self, **kwargs):
         self.extra.update(kwargs)
+        return self
 
     def present(self):
         data = {}
