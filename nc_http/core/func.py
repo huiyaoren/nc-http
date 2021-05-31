@@ -88,3 +88,16 @@ def send_png(img_handler, name='image'):
         attachment_filename='{}.png'.format(name),
         as_attachment=True
     )
+
+
+def get_client_ip(request):
+    """
+    获取客户端 ip
+    :param request: flask.Request
+    :return:
+    """
+    x_forwarded_for = request.headers.get('X-Forwarded-For')
+    if x_forwarded_for:
+        ips = x_forwarded_for.split(',')
+        return ips[0].strip()
+    return request.headers.get('X-Real-Ip', request.remote_addr)
