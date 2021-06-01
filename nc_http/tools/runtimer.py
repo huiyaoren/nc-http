@@ -2,27 +2,37 @@ class RunTimer:
     """
     运行计时器
     :example:
-        >>> RunTimer.set_point()
-        >>> for i in range(1000):
-        >>>     print(i)
-        >>> RunTimer.set_point()
-        >>> RunTimer.check()
+        >>> timer = RunTimer()
+        >>> timer.set_point()
+        >>> time.sleep(1)
+        >>> time_cost = timer.check_one()
+        >>> print(time_cost)
+        or
+        >>> timer = RunTimer()
+        >>> timer.set_point()
+        >>> time.sleep(1)
+        >>> timer.set_point()
+        >>> time.sleep(2)
+        >>> time_cost = timer.check()
+        >>> print(time_cost)
     """
     time = None
     profile = []
 
-    @classmethod
-    def set_point(cls):
+    def set_point(self):
         import time
         time = time.time()
-        if cls.time:
-            cls.profile.append(time - cls.time)
-        cls.time = time
+        if self.time:
+            self.profile.append(time - self.time)
+        self.time = time
 
-    @classmethod
-    def check(cls):
-        print(cls.profile)
-        cls.time = None
-        profile = cls.profile.copy()
-        cls.profile = []
+    def check(self):
+        self.set_point()
+        self.time = None
+        profile = self.profile.copy()
+        self.profile = []
         return profile
+
+    def check_one(self):
+        profile = self.check()
+        return profile[0]
