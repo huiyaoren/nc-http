@@ -191,8 +191,8 @@ class FESucks:
         """
         return list_to_tree(rows, id_key, parent_id_key, i)
 
-    @classmethod
-    def set_placeholder(cls, data, key, placeholder_name_list, placeholder=None):
+    @staticmethod
+    def set_placeholder(data, key, placeholder_name_list, placeholder=None):
         """
         数据补位
         :param data:
