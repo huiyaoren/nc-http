@@ -191,6 +191,30 @@ class FESucks:
         """
         return list_to_tree(rows, id_key, parent_id_key, i)
 
+    @classmethod
+    def set_placeholder(cls, data, key, placeholder_name_list, placeholder=None):
+        """
+        数据补位
+        :param data:
+            [{'count': 1, 'date': '2021-01-01'}]
+        :param key:
+            'date'
+        :param placeholder_name_list:
+            ['2021-01-01', '2021-01-02', '2021-01-03']
+        :param placeholder:
+            {'count': 0}
+        :return:
+            [{'count': 1, 'date': '2021-01-01'}, {'count': 0, 'date': '2021-01-02'}, {'count': 0, 'date': '2021-01-03'}]
+        """
+        placeholder = placeholder or {}
+        miss_placeholder_name_list = set(placeholder_name_list) - set(item[key] for item in data)
+        for placeholder_name in miss_placeholder_name_list:
+            _placeholder = placeholder.copy()
+            _placeholder[key] = placeholder_name
+            data.append(_placeholder)
+
+        return data
+
 
 '''
 # 结果处理 树转列表 todo
